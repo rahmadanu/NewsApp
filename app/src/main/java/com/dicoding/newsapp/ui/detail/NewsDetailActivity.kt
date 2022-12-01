@@ -3,6 +3,8 @@ package com.dicoding.newsapp.ui.detail
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -19,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.dicoding.newsapp.R
 import com.dicoding.newsapp.data.local.entity.NewsEntity
@@ -109,7 +112,22 @@ fun NewsDetailContent(
     ) { innerPadding ->
         Box(modifier = Modifier
             .padding(innerPadding)
-            .fillMaxSize())
+            .fillMaxSize()) {
+            AndroidView(
+                factory = {
+                    WebView(it).apply {
+                        layoutParams = ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                        )
+                        webViewClient = WebViewClient()
+                    }
+                },
+                update = {
+                    it.loadUrl(url)
+                }
+            )
+        }
     }
 }
 
