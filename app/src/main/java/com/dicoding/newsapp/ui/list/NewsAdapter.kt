@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +48,7 @@ class NewsAdapter(private val onItemClick: (NewsEntity) -> Unit) : ListAdapter<N
         binding.root
     ) {
         fun bind(news: NewsEntity) {
+            binding.composeView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             binding.composeView.setContent {
                 MaterialTheme {
                     NewsItem(
